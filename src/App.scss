@@ -1,0 +1,12 @@
+@import './variable.scss';
+
+.container {
+  border: 1px solid #000;
+  border-radius: 10px;
+  width: 400px;
+  text-align: center;
+  margin: 100px auto;
+  overflow: hidden;
+  position: relative;
+  background: $white;
+}

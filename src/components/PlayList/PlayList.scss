@@ -1,0 +1,20 @@
+@import '../../variable.scss';
+
+.play-list {
+  display: none;
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid black;
+  list-style-type: none;
+  position: absolute;
+  z-index: 10;
+  top: 100px;
+
+  div.play-list-body div.row {
+    display: flex;
+    justify-content: space-between;
+  }
+  span.audio-duration {
+    font-size: 0.9rem;
+  }
+}

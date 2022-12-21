@@ -1,0 +1,24 @@
+.progress-area {
+  width: 360px;
+  margin: 10px auto;
+  cursor: pointer;
+}
+
+.progress-bar {
+  width: 360px;
+  height: 10px;
+  border: 1px solid black;
+  & > div.progress-inner-bar {
+    width: 0%;
+    height: 92%;
+    margin: 0.3px 0;
+    background-color: greenyellow;
+  }
+}
+
+.music-timer {
+  display: flex;
+  justify-content: space-between;
+  color: #515151;
+  font-size: 0.8rem;
+}
