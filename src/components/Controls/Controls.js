@@ -10,7 +10,7 @@ import Shuffle from '@mui/icons-material/Shuffle';
 import VolumeUp from '@mui/icons-material/VolumeUp';
 import { Grid } from '@mui/material';
 import Slider from '@mui/material/Slider';
-import './Contrls.scss';
+import './Controls.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   skipPrevious,
@@ -50,7 +50,7 @@ const Controls = ({
     resetDuration();
   };
   const onShowPlayList = () => {
-    showMusicList();
+    setShowMusicList();
   };
   // setShowMusicList,
   const repeatIcon = (status) => {

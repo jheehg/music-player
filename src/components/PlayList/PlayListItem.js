@@ -4,9 +4,14 @@ import Grid from '@mui/material/Grid';
 import classNames from 'classnames';
 import React from 'react';
 
-const PlayListItem = ({ item, index }) => {
+const PlayListItem = ({ item, index, draggable, onDragItem, onDragStart, onClickItem }) => {
   return (
-    <ListItemText className={classNames('row')} draggable={true}>
+    <ListItemText 
+      className={classNames('row')} 
+      draggable={draggable} 
+      onDragItem={onDragItem} 
+      onDragStart={onDragStart}
+    >
       <Grid container justifyContent="space-between">
         <Grid item xs={10} sx={{ textAlign: 'left' }}>
           <Typography sx={{ fontSize: '1rem' }}>{item.name}</Typography>
