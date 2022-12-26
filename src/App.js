@@ -3,22 +3,26 @@ import Controls from './components/Controls/Controls';
 import PlayList from './components/PlayList/PlayList';
 import SongDetail from './components/SongDetail/SongDetail';
 import ProgressArea from './components/ProgressArea/ProgressArea';
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
+import { useDispatch, useSelector } from 'react-redux';
+import { setList } from './store/MusicPlayReducer';
 
 function App() {
   const audioRef = useRef();
   const playListRef = useRef();
-  const [showList, setShowList] = useState(false);
+  const [showing, setShowing] = useState(false);
+  const playList = useSelector((state) => state.playList);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if(!showList) {
+    if (!showing) {
       playListRef.current.style.display = 'none';
     } else {
       playListRef.current.style.display = 'block';
     }
-  }, [showList]);
+  }, [showing]);
 
   const onPlay = () => {
     audioRef.current.play();
@@ -29,10 +33,13 @@ function App() {
   const setVolume = (vol) => {
     audioRef.current.volume(vol);
   };
+  const showMusicList = useCallback(() => playList, [playList]);
 
-  const showMusicList = () => {};
-  const setShowMusicList = () => {
-    setShowList(!showList);
+  const setShowMusicList = (newList) => {
+    dispatch(setList(newList));
+  };
+  const setShowingList = () => {
+    setShowing(!showing);
   };
   const resetDuration = () => {};
 
@@ -53,13 +60,15 @@ function App() {
         <SongDetail />
         <PlayList
           ref={playListRef}
-          showMusicList={showMusicList}
+          showMusicList={showMusicList()}
           setShowMusicList={setShowMusicList}
+          setShowingList={setShowingList}
         />
         <ProgressArea ref={audioRef} />
         <Controls
           play={onPlay}
           pause={onPause}
+          setShowingList={setShowingList}
           showMusicList={showMusicList}
           setShowMusicList={setShowMusicList}
           resetDuration={resetDuration}

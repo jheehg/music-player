@@ -9,6 +9,7 @@ const SongDetail = () => {
   const playing = useSelector((state) => state.playing);
   const currentIndex = useSelector((state) => state.currentIndex);
   const playList = useSelector((state) => state.playList);
+
   return (
     <Stack>
       <Box sx={{ padding: '8px 0' }}>

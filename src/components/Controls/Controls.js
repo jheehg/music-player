@@ -21,6 +21,7 @@ import {
 } from '../../store/MusicPlayReducer';
 
 const Controls = ({
+  setShowingList,
   showMusicList,
   setShowMusicList,
   resetDuration,
@@ -50,7 +51,7 @@ const Controls = ({
     resetDuration();
   };
   const onShowPlayList = () => {
-    setShowMusicList();
+    setShowingList();
   };
   // setShowMusicList,
   const repeatIcon = (status) => {

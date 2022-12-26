@@ -17,4 +17,16 @@
   span.audio-duration {
     font-size: 0.9rem;
   }
+  .item {
+    cursor: move;
+  }
+  .item * {
+    pointer-events: none;
+  }
+  .item.dragstart {
+    opacity: 0.4;
+  }
+  .item.dragover {
+    border-top: 2px solid #feea9b;
+  }
 }
