@@ -24,14 +24,11 @@ const PlayList = (
     const dragItem = playList[startIndex];
     const list = [...playList];
     list.splice(startIndex, 1);
-    const newListData =
-      startIndex < dropIndex
-        ? [
-            ...list.slice(0, dropIndex - 1),
-            dragItem,
-            ...list.slice(dropIndex - 1),
-          ]
-        : [...list.slice(0, dropIndex), dragItem, ...list.slice(dropIndex)];
+    const newListData = [
+      ...list.slice(0, dropIndex),
+      dragItem,
+      ...list.slice(dropIndex),
+    ];
 
     setShowMusicList(newListData);
   };
@@ -63,7 +60,9 @@ const PlayList = (
         }
         sx={{ paddingBottom: 0 }}
       ></CardHeader>
-      <CardContent sx={{ width: '100%', height: '290px', overflow: 'auto' }}>
+      <CardContent
+        sx={{ width: '100%', height: '290px', overflow: 'auto', px: 1 }}
+      >
         <MenuList dense>
           {playList?.map((item, index) => (
             <MenuItem key={index}>

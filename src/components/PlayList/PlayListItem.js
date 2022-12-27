@@ -24,12 +24,17 @@ const PlayListItem = ({ item, index, draggable, onDrop, onDragStart }) => {
     e.preventDefault();
   };
 
+  const onDropItem = () => {
+    playListItemRef.current.classList.remove('dragover');
+    onDrop(index);
+  };
+
   return (
     <ListItemText
       ref={playListItemRef}
       className={classNames('item')}
       draggable={draggable}
-      onDrop={() => onDrop(index)}
+      onDrop={onDropItem}
       onDragStart={onDragStartItem}
       onDragEnd={onDragEnd}
       onDragEnter={onDragEnter}

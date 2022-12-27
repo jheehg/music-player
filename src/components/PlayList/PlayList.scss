@@ -24,9 +24,11 @@
     pointer-events: none;
   }
   .item.dragstart {
-    opacity: 0.4;
+    opacity: 0.3;
   }
   .item.dragover {
-    border-top: 2px solid #feea9b;
+    color: #168851;
+    scale: 1.03;
+    border-top: 2px dotted #6d6f6f;
   }
 }
