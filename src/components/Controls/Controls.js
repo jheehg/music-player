@@ -19,6 +19,7 @@ import {
   repeatOne,
   shuffle,
 } from '../../store/MusicPlayReducer';
+import { DEFAULT_VOL } from '../../util/const';
 
 const Controls = ({
   setShowingList,
@@ -29,8 +30,8 @@ const Controls = ({
   pause,
   setVolume,
 }) => {
-  const playing = useSelector((state) => state.playing);
   const dispatch = useDispatch();
+  const playing = useSelector((state) => state.playing);
   const repeat = useSelector((state) => state.repeat);
 
   const onClickPlay = () => {
@@ -53,7 +54,6 @@ const Controls = ({
   const onShowPlayList = () => {
     setShowingList();
   };
-  // setShowMusicList,
   const repeatIcon = (status) => {
     switch (status) {
       case 'ALL':
@@ -129,7 +129,7 @@ const Controls = ({
         />
         <Slider
           size="small"
-          defaultValue={0.2}
+          defaultValue={DEFAULT_VOL}
           onChange={onSliderChange}
           aria-label="Small"
           aria-labelledby="input-slider"

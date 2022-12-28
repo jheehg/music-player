@@ -7,6 +7,7 @@ import React, {
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { playMusic, stopMusic, resetTrack } from '../../store/MusicPlayReducer';
+import { DEFAULT_VOL } from '../../util/const';
 import './ProgressArea.scss';
 
 const ProgressArea = (prop, ref) => {
@@ -20,6 +21,10 @@ const ProgressArea = (prop, ref) => {
   const [track, setTrack] = useState(null);
   const [ingTime, setIngTime] = useState('00:00');
   const [fullTime, setFullTime] = useState('00:00');
+
+  useEffect(() => {
+    audio.current.volume = DEFAULT_VOL;
+  }, []);
 
   useEffect(() => {
     resetStatus();
