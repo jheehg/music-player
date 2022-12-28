@@ -6,7 +6,7 @@ import React, {
   useEffect,
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { playMusic, stopMusic } from '../../store/MusicPlayReducer';
+import { playMusic, stopMusic, resetTrack } from '../../store/MusicPlayReducer';
 import './ProgressArea.scss';
 
 const ProgressArea = (prop, ref) => {
@@ -17,17 +17,16 @@ const ProgressArea = (prop, ref) => {
   const currentIndex = useSelector((state) => state.currentIndex);
   const playing = useSelector((state) => state.playing);
   const repeat = useSelector((state) => state.repeat);
-  const [track, setTrack] = useState();
+  const [track, setTrack] = useState(null);
   const [ingTime, setIngTime] = useState('00:00');
   const [fullTime, setFullTime] = useState('00:00');
 
   useEffect(() => {
+    resetStatus();
     setTrack(playList[currentIndex]);
-    setIngTime(getTimeAsString(0));
-    progressInnerBar.current.style.width = '0%';
   }, [currentIndex, playList]);
 
-  const onLoadedMetadata = () => {
+  const onCanPlayThrough = () => {
     if (audio.current.duration)
       setFullTime(getTimeAsString(audio.current.duration));
     if (playing) audio.current.play();
@@ -59,22 +58,42 @@ const ProgressArea = (prop, ref) => {
     progressInnerBar.current.style.width = (currentTime / duration) * 100 + '%';
 
     setIngTime(getTimeAsString(currentTime));
-
-    if (currentTime === duration) onPlayNextTrack();
   };
 
-  const onPlayNextTrack = () => {
-    console.log(repeat);
-    let nextIndex = currentIndex;
+  const onSetNextTrack = () => {
     if (repeat === 'SHUFFLE') {
-      nextIndex = Math.ceil(Math.random() * playList.length - 1);
+      onSetTrackShuffle();
     } else if (repeat === 'ALL') {
-      nextIndex = currentIndex < playList.length - 1 ? currentIndex + 1 : 0;
+      onSetTrackAll();
     } else {
-      nextIndex = currentIndex;
+      onSetTrackOne();
     }
+  };
+
+  const onSetTrackShuffle = () => {
+    const randomIndex = Math.floor(Math.random() * playList.length);
+    if (randomIndex === currentIndex) {
+      onSetTrackShuffle();
+    } else {
+      setTrack(playList[randomIndex]);
+      dispatch(resetTrack(randomIndex));
+    }
+  };
+
+  const onSetTrackAll = () => {
+    const nextIndex = currentIndex < playList.length - 1 ? currentIndex + 1 : 0;
     setTrack(playList[nextIndex]);
-    audio.current.currentTime = 0;
+    dispatch(resetTrack(nextIndex));
+  };
+
+  const onSetTrackOne = () => {
+    resetStatus();
+    audio.current.play();
+  };
+
+  const resetStatus = () => {
+    setIngTime(getTimeAsString(0));
+    progressInnerBar.current.style.width = '0%';
   };
 
   const onClickProgress = (e) => {
@@ -111,7 +130,8 @@ const ProgressArea = (prop, ref) => {
           onPause={onPause}
           onTimeUpdate={onTimeUpdate}
           preload="metadata"
-          onLoadedMetadata={onLoadedMetadata}
+          onCanPlayThrough={onCanPlayThrough}
+          onEnded={onSetNextTrack}
         />
       </div>
       <div className="music-timer">

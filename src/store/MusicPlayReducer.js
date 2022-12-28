@@ -16,6 +16,7 @@ const SHUFFLE = 'musicPlayer/SHUFFLE';
 const REPEAT_ONE = 'musicPlayer/REPEAT_ONE';
 const REPEAT_ALL = 'musicPlayer/REPEAT_ALL';
 const SET_LIST = 'musicPlayer/SET_LIST';
+const RESET_TRACK = 'musicPlayer/RESET_TRACK';
 
 export const playMusic = () => ({ type: PLAY_MUSIC });
 export const stopMusic = () => ({ type: STOP_MUSIC });
@@ -25,6 +26,10 @@ export const shuffle = () => ({ type: SHUFFLE });
 export const repeatOne = () => ({ type: REPEAT_ONE });
 export const repeatAll = () => ({ type: REPEAT_ALL });
 export const setList = (playList) => ({ type: SET_LIST, playList });
+export const resetTrack = (newIndex) => ({
+  type: RESET_TRACK,
+  newIndex,
+});
 
 export default function musicPlayerReducer(state = initialState, action) {
   switch (action.type) {
@@ -60,6 +65,13 @@ export default function musicPlayerReducer(state = initialState, action) {
       return { ...state, repeat: 'ALL' };
     case SET_LIST:
       return { ...state, playList: action.playList };
+    case RESET_TRACK:
+      return {
+        ...state,
+        currentIndex: action.newIndex,
+        currentMusicId: playList[action.newIndex].id,
+        playing: true,
+      };
     default:
       return state;
   }
