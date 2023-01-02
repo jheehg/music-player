@@ -1,4 +1,7 @@
-.img-area img {
+.img-area img,
+.img-area .MuiSkeleton-root {
   width: 250px;
+  height: 235px;
+  margin: 5px auto;
   border-radius: 15px;
 }

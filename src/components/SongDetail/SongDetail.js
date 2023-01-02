@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
+import Skeleton from '@mui/material/Skeleton';
 
 const SongDetail = () => {
   const playing = useSelector((state) => state.playing);
@@ -18,10 +19,14 @@ const SongDetail = () => {
         </Typography>
       </Box>
       <Box className="img-area">
-        <img
-          src={playList[currentIndex].img}
-          alt={playList[currentIndex].alt}
-        />
+        {playList[currentIndex].img ? (
+          <img
+            src={playList[currentIndex].img}
+            alt={playList[currentIndex].alt}
+          />
+        ) : (
+          <Skeleton variant="rectangular" width={250} height={235} />
+        )}
       </Box>
       <Typography sx={{ fontSize: '1rem' }}>
         {playList[currentIndex].name}
